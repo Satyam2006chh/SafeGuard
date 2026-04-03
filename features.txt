@@ -1,0 +1,980 @@
+
+================================================================================
+                     S A F E G U A R D
+          A Real-Time Full-Stack Personal Safety System
+================================================================================
+                    PROJECT FEATURE DOCUMENTATION
+                       Version 1.0 | Final
+================================================================================
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         THE PROBLEM STATEMENT
+                            "The Safety Gap"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+In fast-growing urban areas and college campuses across India, personal safety
+apps exist — but they suffer from three critical failures that leave students
+vulnerable every single night. We call this the "Safety Gap."
+
+Meet Arjun. He is a 20-year-old engineering student at Chitkara University.
+Every night, after late-night library sessions or college events, he walks back
+to his hostel alone. He has a safety app installed. But it has never truly
+protected him — because it was never truly built for him.
+
+────────────────────────────────────────────────────────────────────────────────
+FAILURE #1 — THE "REACTIVE" FAILURE (Too Late)
+────────────────────────────────────────────────────────────────────────────────
+
+Most safety apps are REACTIVE. They wait for Arjun to press an SOS button.
+
+THE REALITY:
+If Arjun is ambushed, his phone is snatched, or he is too scared to move —
+he CANNOT press a button. If the app waits for him to act, it has already
+failed him before the danger even fully unfolds.
+
+THE GAP:
+There is no PROACTIVE system that watches him automatically, without needing
+any action from him.
+
+────────────────────────────────────────────────────────────────────────────────
+FAILURE #2 — "DIGITAL BLINDNESS" (No Context)
+────────────────────────────────────────────────────────────────────────────────
+
+Standard maps (Google Maps, Apple Maps) are built for CARS, not for people
+walking home at midnight.
+
+THE REALITY:
+A road might be FAST (green) for a car, but for a walking student at 12 AM,
+that same road is DANGEROUS (red) because it is pitch dark and deserted.
+Current apps have no concept of human safety context.
+
+THE GAP:
+Apps lack Spatial-Temporal Intelligence — they do not know that "Safety"
+changes based on the TIME of day and the CROWD density around you.
+
+────────────────────────────────────────────────────────────────────────────────
+FAILURE #3 — THE "LAST-MILE" VULNERABILITY (The Doorstep Problem)
+────────────────────────────────────────────────────────────────────────────────
+
+Statistically, many incidents happen RIGHT OUTSIDE the victim's destination —
+the hostel gate, the apartment door, the college building entrance.
+
+THE REALITY:
+Once Arjun reaches his gate, he RELAXES. He thinks he is safe. But if he is
+intercepted at the gate itself, no one knows he arrived. Every app considers
+the journey complete the moment the destination is "nearby."
+
+THE GAP:
+There is no "Safe Zone" logic that ensures the user actually made it INSIDE
+the building safely — not just near it.
+
+────────────────────────────────────────────────────────────────────────────────
+FAILURE #4 — THE "SINGLE POINT OF CONTACT" FAILURE
+────────────────────────────────────────────────────────────────────────────────
+
+Most apps send one SMS to one person. If that person is asleep, driving, or
+has their phone on silent — the alert disappears into the void.
+
+THE REALITY:
+One message to one person is not a safety system. It is a lottery.
+
+THE GAP:
+There is no intelligent escalation system that keeps trying until SOMEONE
+responds — and automatically contacts emergency services as the last resort.
+
+────────────────────────────────────────────────────────────────────────────────
+FAILURE #5 — THE "TRANSPORT BLIND SPOT"
+────────────────────────────────────────────────────────────────────────────────
+
+Safety apps assume the user is walking. But what about late-night Ola/Uber
+rides? A cab that takes a wrong route into a dark area is one of the most
+statistically dangerous scenarios for students — and apps are completely
+blind to it.
+
+THE GAP:
+No consumer safety app monitors whether the vehicle YOU ARE IN is going
+where it is supposed to go.
+
+────────────────────────────────────────────────────────────────────────────────
+THE SOLUTION — A DATA-DRIVEN SAFETY ECOSYSTEM
+────────────────────────────────────────────────────────────────────────────────
+
+SafeGuard moves from a "Panic Button" to an INTELLIGENT GUARDIAN.
+
+"SafeGuard is a Real-Time Full-Stack Safety System that closes the Safety Gap
+by using Server-Side Ghost Timers (Proactive), Smart Escalation Ladders
+(Persistent), Geofencing (Last-Mile), Cab Route Deviation Detection
+(Transport), Community First Responders (Human Layer), and Offline Emergency
+QR (Zero-Battery Protection) to ensure a user is never truly alone — even
+if their phone goes completely offline."
+
+The most critical innovation: SafeGuard's protection lives on the SERVER,
+not the phone. A thief can steal Arjun's phone. They cannot steal the server.
+
+
+================================================================================
+                    TECH STACK OVERVIEW
+================================================================================
+
+Frontend  : React.js (Single Page Application — Web, not mobile app)
+Backend   : FastAPI (Python) — async, high-performance
+Database  : MongoDB Atlas — NoSQL with GeoJSON geospatial support
+Real-Time : WebSockets (FastAPI native) — live GPS streaming
+SMS/Calls : Twilio API — SMS, WhatsApp, Voice calls
+Maps      : Google Maps JavaScript SDK + Directions API + Places API
+Auth      : JWT (JSON Web Tokens) via FastAPI
+Storage   : Cloudinary — profile photos, QR cards
+QR Code   : Python qrcode library
+Hosting   : Render (Backend) + Vercel (Frontend)
+
+NOTE: This is a WEB APPLICATION, not a mobile app. Features that require
+native app capabilities (e.g., vibration) have been adapted for browser use.
+
+
+================================================================================
+           FEATURE ARCHITECTURE — MAIN FEATURES & SUB-FEATURES
+================================================================================
+
+MAIN FEATURES (Core — must work perfectly):
+  1. The Safety Contract + Duress PIN
+  2. The Ghost Timer (Server-Side Watchman)
+  3. Cab & Ride-Share Safety Mode
+  4. "Safe Until" Scheduler
+  5. Community First Responder Network
+  6. Offline Emergency QR Card
+
+SUB-FEATURES (Support the main features):
+  A. Smart Escalation Ladder        → Sub-feature of Ghost Timer + all SOS flows
+  B. Battery-Aware Safety Mode      → Sub-feature of Ghost Timer
+  C. Safe Zone Registry             → Sub-feature of Ghost Timer / SOS
+  D. Trusted Circle Live View       → Sub-feature of Safety Contract
+  E. Digital Safety Passport        → Sub-feature of Offline QR Card
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                      MAIN FEATURE 1
+              THE SAFETY CONTRACT + DURESS PIN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT PROBLEM DOES IT SOLVE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Every safety app fails the moment a threat actor FORCES the user to cancel
+their own alert. A kidnapper says "Cancel your tracking right now or else."
+Arjun cancels it. The app — believing everything is fine — shuts down. The
+app has actively helped the danger, not prevented it.
+
+There is also the question of accuracy: if Arjun types a vague destination,
+the GPS coordinates captured will be wrong. The system must enforce real,
+verifiable addresses using Google Places API.
+
+THE CONCEPT IN ONE LINE:
+Before Arjun steps out, he "hands over" his safety to the SERVER — not just
+to his phone.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+THE SCENARIO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+It is 11:45 PM. Arjun opens SafeGuard on his browser before leaving the
+college library.
+
+STEP 1 — DESTINATION:
+Arjun begins typing "Boys Hostel Block C..." in the destination field.
+Google Places API autocomplete immediately suggests real addresses.
+He selects the correct one. The system captures the verified GPS coordinates:
+   Destination → 28.6139° N, 77.2090° E (Boys Hostel Block C)
+
+STEP 2 — ESTIMATED TIME:
+Arjun sets his Estimated Journey Time → 18 minutes.
+This becomes his "safe arrival deadline" on the server.
+
+STEP 3 — THE TWO PINs (The Duress System):
+Arjun sets two separate PINs:
+
+   SAFE PIN:   4921  →  "I made it home. Journey complete."
+                         Server marks journey as COMPLETED. Everything stops.
+
+   DURESS PIN: 1234  →  "Someone is FORCING me to cancel."
+                         Screen shows: "Journey Ended. Stay Safe! ✓"
+                         (Attacker sees a normal, calm completion screen.)
+                         BUT SILENTLY, the server:
+                           → Marks journey as DURESS_TRIGGERED
+                           → Sends SOS to ALL trusted contacts immediately
+                           → Locks the GPS at current coordinates as evidence
+                           → Triggers the full Escalation Ladder (Sub-Feature A)
+                           → Begins evidence collection
+
+WHY THE DURESS PIN IS GENIUS:
+The attacker sees a success screen and walks away satisfied.
+They have no idea that the moment Arjun typed "1234," every contact and
+the server were silently alerted. The deception is the protection.
+
+WHAT DATA IS STORED IN MONGODB:
+   {
+     user_id: "arjun_id",
+     destination: {
+       name: "Boys Hostel Block C",
+       coordinates: { type: "Point", coordinates: [77.2090, 28.6139] }
+     },
+     start_time: "2025-04-03T23:45:00",
+     estimated_duration_minutes: 18,
+     expected_checkin_time: "2025-04-04T00:03:00",
+     safe_pin_hash: "bcrypt_hash_of_4921",
+     duress_pin_hash: "bcrypt_hash_of_1234",
+     status: "active",  // → completed / duress_triggered / sos_fired
+     journey_path: [],  // GPS waypoints added every 5 seconds
+     last_known_position: null,
+     vehicle_details: null
+   }
+
+TECH STACK FOR THIS FEATURE:
+   Google Places API        → Real address autocomplete + GPS coordinates
+   HTML5 Geolocation API    → Captures user's CURRENT location (start point)
+   FastAPI POST /journey    → Creates the journey record in MongoDB
+   bcrypt (Python)          → Hashes both PINs — never stored as plain text
+   MongoDB                  → Stores the complete journey document
+   FastAPI PUT /journey/pin → Receives PIN entry, checks safe vs. duress
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                      MAIN FEATURE 2
+              THE GHOST TIMER (Server-Side Watchman)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT PROBLEM DOES IT SOLVE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Every single safety app on the market today lives on the phone. The phone gets
+stolen, thrown away, switched off, or its battery dies — and the app dies with
+it. The protection vanishes at the exact moment it is needed most.
+
+The Ghost Timer solves this by moving the watchman OFF the phone and ONTO
+the server. The server cannot be stolen. It cannot be switched off by a thief.
+It does not have a battery that dies.
+
+THE CONCEPT IN ONE LINE:
+Once Arjun's journey starts, a countdown begins on the server. If no Safe PIN
+is entered by the deadline — SOS fires automatically. No action from Arjun
+needed. Not ever.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+THE SCENARIO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1 — JOURNEY STARTS:
+It is 11:45 PM. Arjun presses "Start Journey."
+The moment this button is pressed, FastAPI does two things simultaneously:
+   → Creates the journey document in MongoDB (status: "active")
+   → Launches a Background Task that starts counting: 18 × 60 = 1,080 seconds
+
+STEP 2 — WALKING:
+Arjun's browser sends his GPS location to the server via WebSocket every 5
+seconds. The server updates "last_known_position" in MongoDB on every ping.
+
+STEP 3 — THE PHONE IS SNATCHED:
+At the 10-minute mark (11:55 PM), a mugger grabs Arjun's phone and throws
+it into a bush.
+
+Arjun's browser is now closed. WebSocket is disconnected.
+GPS pings have stopped.
+
+But on the server? The Background Task is still running.
+It does not know or care that the phone is gone.
+It simply keeps counting.
+
+STEP 4 — THE TIMER HITS ZERO:
+At 12:03 AM (the 18-minute mark), the Background Task wakes up and checks
+MongoDB: "Is the journey status still active?" → YES.
+"Has a PIN been entered?" → NO.
+
+CONCLUSION: No one cancelled this journey. SOS must fire.
+→ Ghost Timer triggers the Smart Escalation Ladder (Sub-Feature A)
+→ All contacts receive: "🚨 Arjun did not check in. Last known location:
+  [Google Maps link to last GPS position before phone went offline]"
+
+The last GPS position IS available — it was stored in MongoDB by the WebSocket
+pings before the phone was thrown. The father sees his son's last location
+even though the phone is now lying in a bush.
+
+GEOFENCING (Built Into the Ghost Timer):
+When Arjun's GPS ping shows he is within 50 meters of his destination:
+→ Ghost Timer does NOT auto-complete the journey
+→ Instead, it switches to a "Final Countdown" of 2 minutes
+→ Arjun's screen shows: "You have arrived! Enter your PIN within 2 minutes."
+→ This 2-minute window protects him at the most dangerous spot: his own gate.
+→ If no PIN in 2 minutes → SOS fires with exact gate coordinates.
+This is called the LAST-MILE PROTECTION feature of the Ghost Timer.
+
+WHY THE 2-MINUTE FINAL COUNTDOWN MATTERS:
+Statistics show that many incidents happen right outside the victim's
+destination. The app does not consider the journey safe just because Arjun
+is nearby. He must physically confirm he is INSIDE and SAFE.
+
+TECH STACK FOR THIS FEATURE:
+   FastAPI BackgroundTasks   → Runs asyncio.sleep countdown on the server
+   MongoDB                   → Stores journey status + expected_checkin_time
+   WebSockets (FastAPI)      → Live GPS stream from browser to server
+   Haversine Formula         → Python math to calculate distance to destination
+                               (no external API needed — pure server logic)
+   Twilio SMS API            → Fires SOS SMS when timer hits zero
+   FastAPI PUT /journey/pin  → Receives PIN, stops timer if correct
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                      MAIN FEATURE 3
+              CAB & RIDE-SHARE SAFETY MODE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT PROBLEM DOES IT SOLVE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Every feature described before assumes Arjun is WALKING. But what about a
+student who books an Ola or Uber at 1 AM?
+
+Ride-share crimes are real. A driver can deviate from the registered route,
+drive into a deserted area, or simply lock the doors and change direction.
+The student is trapped inside a moving vehicle.
+
+The Ghost Timer does not help here — the phone is ON. The timer is running.
+Everything looks fine to the system. But Arjun is physically in danger.
+
+This mode addresses a completely different threat: being in a vehicle driven
+by someone else that is going to the WRONG place.
+
+THE CONCEPT IN ONE LINE:
+Before getting into the cab, Arjun registers the expected route. If the cab
+deviates significantly from that route, the system automatically alerts his
+contacts without him needing to do anything.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+THE SCENARIO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+It is 1:00 AM. Arjun has booked an Ola. Before getting into the cab, he
+opens SafeGuard and activates "Cab Mode."
+
+STEP 1 — SETUP:
+Arjun enters:
+   Vehicle Number Plate: DL 4C AB 1234
+   Destination: Boys Hostel Block C (same Google Places autocomplete)
+
+Google Directions API calculates the optimal route from his current GPS
+to the destination. This route — as a series of GPS waypoints — is saved in
+MongoDB as the "expected_route" for this journey.
+
+STEP 2 — THE JOURNEY STARTS:
+Arjun gets into the cab and presses "Start Cab Journey."
+The app begins tracking his GPS via WebSocket, same as walking mode.
+The server now compares every incoming GPS ping against the expected route.
+
+STEP 3 — THE DEVIATION:
+At the 8-minute mark, the cab takes a LEFT turn. The expected route said
+to go STRAIGHT. The server calculates the distance between where Arjun IS
+and where he SHOULD BE on the expected route using the Haversine formula.
+
+Result: Deviation = 340 meters (threshold is 200 meters).
+
+STEP 4 — THE ALERT:
+The server immediately sends an alert to Arjun's browser:
+   "⚠️ Your cab has deviated from the expected route by 340 meters.
+    Please verify with your driver. You have 60 seconds to confirm
+    you are safe. [I'm Okay] [SOS NOW]"
+
+STEP 5A — ARJUN IS OKAY:
+If the deviation was a traffic diversion and Arjun is fine, he taps
+"I'm Okay." The system logs the deviation as verified and resets.
+
+STEP 5B — NO RESPONSE IN 60 SECONDS:
+Arjun cannot respond (he is being restrained). The countdown hits zero.
+SOS fires immediately to ALL trusted contacts:
+   "🚨 ALERT: Arjun's cab (DL 4C AB 1234) has deviated 340m from its
+    registered route. Last known location: [Maps link] at 1:12 AM.
+    Vehicle registration: DL 4C AB 1234."
+
+The vehicle number plate is included in the SOS — this is critical
+information for police to track the cab.
+
+IMPORTANT NOTE (WEBSITE vs APP):
+Because SafeGuard is a website (not a native app), phone vibration cannot
+be used. The alert is shown as a highly visible, full-screen browser
+notification with audio alert using HTML5 Audio API instead.
+
+TECH STACK FOR THIS FEATURE:
+   Google Directions API      → Calculates expected route waypoints at start
+   WebSockets                 → Live GPS streaming from browser to server
+   FastAPI                    → Haversine deviation check on every GPS ping
+   MongoDB                    → Stores expected_route + vehicle_details
+   Twilio SMS API             → Fires SOS with vehicle plate in message
+   React (60-second modal)    → Countdown confirmation UI in browser
+   HTML5 Audio API            → Audio alert since vibration unavailable on web
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                      MAIN FEATURE 4
+              "SAFE UNTIL" SCHEDULER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT PROBLEM DOES IT SOLVE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Not every safety situation involves a journey with GPS tracking. Consider:
+
+   - Priya studying alone in the library basement until 11 PM
+   - A student attending an appointment in a professor's office
+   - Someone at a late-night party saying "I'll be home by 2 AM"
+   - A student sleeping at a friend's hostel overnight
+
+These are STATIONARY safety situations. There is no route to track. No GPS
+movement to monitor. But there is still a clear safety need: if the person
+does not check in by a deadline, something might be wrong.
+
+The "Safe Until" Scheduler is a TIME-BASED safety net — not a location-based
+one. It is the simplest, most broadly applicable feature in SafeGuard.
+
+THE CONCEPT IN ONE LINE:
+Priya tells the system: "I am safe right now at this location. If I have not
+confirmed I am still safe by 11:00 PM, please alert my contacts."
+
+━━━━━━━━━━━━━━━━━━━━━━━
+THE SCENARIO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+It is 9:30 PM. Priya is going to study in the college library basement.
+There is no real "journey" here — she is going indoors and staying there.
+But she is alone, and her parents worry.
+
+STEP 1 — SETTING THE SCHEDULE:
+Priya opens SafeGuard and taps "Safe Until."
+She fills in:
+   Location Description: "Library Basement, Block B"  (just text, no GPS)
+   Safe Until: 11:00 PM
+
+The server creates a schedule record in MongoDB and starts a background timer.
+
+STEP 2 — THE REMINDER:
+At 10:55 PM (5 minutes before deadline), the server sends a browser
+notification to Priya:
+   "⚠️ Your Safe-Until check-in expires in 5 minutes. Tap to confirm
+    you are okay."
+
+Priya is deeply focused on her assignment. She does not see the notification.
+
+STEP 3 — DEADLINE PASSES:
+11:00 PM. No PIN entered. No confirmation received.
+
+The server immediately triggers the Smart Escalation Ladder:
+   → Contact #1 (Friend) gets WhatsApp/SMS:
+     "⚠️ Priya set a Safe-Until check-in for 11:00 PM at Library Basement.
+      She has not responded. Please check on her."
+
+STEP 4 — RESOLUTION:
+Priya's friend Rahul calls her. She picks up: "Oh! I completely forgot."
+She opens SafeGuard and enters her Safe PIN. Escalation immediately stops.
+The schedule is marked as COMPLETED in MongoDB.
+
+THE DIFFERENCE FROM THE GHOST TIMER:
+Ghost Timer    = You are actively MOVING. GPS is tracked. Timer runs
+                 based on estimated travel time.
+Safe Until     = You are STATIONARY. No GPS needed. Timer runs based on
+                 a specific clock time you choose.
+
+These are two completely different modes for two completely different
+real-world situations.
+
+TECH STACK FOR THIS FEATURE:
+   FastAPI POST /schedule    → Creates schedule record in MongoDB
+   FastAPI BackgroundTask    → asyncio.sleep until deadline, then fires alert
+   MongoDB                   → "schedules" collection (separate from journeys)
+   Web Push API              → Browser notification 5 minutes before deadline
+   Twilio SMS API            → Escalation alerts to contacts
+   React                     → Simple form: location text + time picker + PIN
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                      MAIN FEATURE 5
+              COMMUNITY FIRST RESPONDER NETWORK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT PROBLEM DOES IT SOLVE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+When an SOS fires, all trusted contacts (parents, friends) receive alerts.
+But what can they actually DO?
+
+   - Arjun's father is 50km away in another city → He cannot physically help
+   - Arjun's friend Rahul is sleeping → He doesn't answer
+   - The police are called → Response time is unknown, likely 15-30 minutes
+
+In the critical first 5 minutes of a safety incident, the person who can make
+the biggest difference is someone who is PHYSICALLY NEARBY right now.
+
+This feature creates a network of verified volunteers — students, hostel
+wardens, NSS members, security guards — who are willing to be physically
+dispatched to help someone in need within their immediate area.
+
+THE CONCEPT IN ONE LINE:
+When no one nearby can help Arjun, SafeGuard finds people who ARE nearby
+and asks them to physically go check on him.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+THE SCENARIO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+PART 1 — VOLUNTEER REGISTRATION (Before Any Emergency):
+
+Any SafeGuard user can visit the website, go to "Become a Volunteer," and
+register their interest in being a First Responder. They specify:
+   → Their role: Student / NSS Volunteer / Security Guard / Hostel Warden
+   → Their availability hours: e.g., "Active 10 PM – 2 AM"
+   → Their area: e.g., "Near Boys Hostel Block B-D, Chitkara University"
+
+An admin reviews and VERIFIES the volunteer before they can receive missions.
+This prevents fake registrations and ensures only trustworthy people are
+in the responder network.
+
+Verified volunteers are stored in MongoDB's "volunteers" collection with their
+current GPS position (updated passively when they are online on SafeGuard).
+
+PART 2 — THE MISSION DISPATCH (During an Emergency):
+
+At 12:08 AM, Arjun's Ghost Timer fires. SOS is triggered. The Smart
+Escalation Ladder begins notifying his trusted contacts (his father, his
+friend). These happen in PARALLEL with the volunteer dispatch — not instead.
+
+Simultaneously, the server runs a geospatial query:
+   "Find all VERIFIED VOLUNTEERS who are currently ACTIVE and within 500m of
+    Arjun's last known GPS position."
+
+Three volunteers are found:
+   - Ravi Kumar (NSS Volunteer) — 180m from Arjun — currently online
+   - Gate Guard Post B — 220m from Arjun
+   - Priya Sharma (Senior Student, Volunteer) — 480m from Arjun
+
+The server sends them all an alert (via browser notification + SMS):
+   "🚨 RESPONDER REQUEST: A fellow student may need immediate help.
+    They are approximately 180m from your current location.
+    [ACCEPT MISSION] [CANNOT HELP RIGHT NOW]"
+
+STEP 3 — RAVI ACCEPTS:
+Ravi taps "Accept Mission." His screen shows:
+   → Arjun's VERIFIED PROFILE PHOTO (so Ravi knows who to look for)
+   → Arjun's last known GPS on Google Maps with live updates
+   → The distance decreasing as Ravi moves toward Arjun: "90m... 60m... 30m"
+
+Arjun's father's tracking page updates:
+   "✅ First Responder Ravi Kumar has accepted and is 180m from Arjun.
+    Estimated arrival: ~2 minutes."
+
+STEP 4 — RAVI ARRIVES:
+Ravi finds Arjun at the gate. He helps him. He taps "Mission Complete" on
+his own SafeGuard screen. The server logs the resolution and notifies all
+contacts that a First Responder has made contact.
+
+EMERGENCY FALLBACK — NO VOLUNTEERS AVAILABLE:
+If the 500m search finds no active volunteers, the radius expands to 1000m.
+If still no one, the radius expands to 2000m.
+If STILL no one is found, the system triggers the NUCLEAR OPTION:
+   → Auto-calls the campus security control room via Twilio Voice
+   → Auto-messages the local police WhatsApp helpline via Twilio
+   → Shows a ONE-TAP "Call 112" button prominently on Arjun's screen
+   → Sends automated email with full incident report to campus authority
+
+This ensures there is ALWAYS a next step — the system never dead-ends.
+
+IMPORTANT NOTE FOR CALLS:
+Automated voice calls via Twilio are ONLY placed to:
+   1. The campus security registered number (admin-verified)
+   2. The local police helpline (registered at system setup)
+   Regular trusted contacts (friends, parents) receive SMS/WhatsApp only.
+   Emergency calls are the last resort, not the first.
+
+TECH STACK FOR THIS FEATURE:
+   MongoDB $near query        → Finds volunteers within expanding radius
+   FastAPI                    → Volunteer dispatch logic + mission management
+   WebSockets                 → Real-time responder GPS tracking
+   Twilio SMS / WhatsApp      → Mission notification to volunteers
+   Twilio Voice API           → Auto-call campus security (last resort only)
+   Google Maps SDK            → Shows Arjun's GPS to the responding volunteer
+   React                      → Volunteer registration form + mission accept UI
+   JWT Auth                   → Volunteer login and identity verification
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                      MAIN FEATURE 6
+              OFFLINE EMERGENCY QR CARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT PROBLEM DOES IT SOLVE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Every single other feature in SafeGuard requires:
+   - The user's phone to be ON
+   - Internet connectivity
+   - The SafeGuard app/website to be running
+
+But what if Arjun collapses due to a medical emergency? What if he is found
+unconscious by a stranger? His phone battery is dead. There is no signal.
+The SafeGuard app is not open. Every digital feature is impossible.
+
+This feature works when NOTHING ELSE works. It requires ZERO technology
+on Arjun's side — just a printed card in his wallet or a QR code on his
+phone's lock screen wallpaper.
+
+THE CONCEPT IN ONE LINE:
+A QR code generated from Arjun's profile, when scanned by ANY passerby
+with ANY phone, shows his emergency contacts, medical information, and
+automatically alerts all his contacts that someone scanned his QR.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+THE SCENARIO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+PART 1 — QR SETUP (Done Once on Profile):
+
+When Arjun sets up his SafeGuard profile, the system automatically generates
+a unique emergency QR code linked to a public URL:
+   safeguard.app/emergency/arjun-unique-secure-token
+
+He can:
+   (A) Download the QR image and set it as his phone lock screen wallpaper
+   (B) Print it on a small card and keep it in his wallet
+   (C) Both — maximum coverage
+
+His profile also stores (optionally):
+   - Blood Group: B+
+   - Medical Conditions: None / Diabetic / Allergic to Penicillin / etc.
+   - Emergency Contact 1: Father — +91-98765-43210
+   - Emergency Contact 2: Mother — +91-87654-32109
+
+PART 2 — THE EMERGENCY:
+
+At 2:00 AM, Arjun collapses on the road due to a medical emergency.
+His phone battery is at 0%. SafeGuard is not running. There is no internet.
+
+A passerby named Vikram sees him on the ground. He notices the QR code
+pattern on Arjun's phone lock screen wallpaper. He opens his own phone's
+camera, points it at Arjun's screen, and scans the QR.
+
+Vikram is taken to: safeguard.app/emergency/arjun-unique-secure-token
+
+WHAT VIKRAM SEES:
+   ════════════════════════════════════════
+   🆘 EMERGENCY INFORMATION
+   ════════════════════════════════════════
+   👤 Name: Arjun Kumar
+   🎓 Chitkara University, CSE 3rd Year
+   🩸 Blood Group: B+
+   🏥 Medical Conditions: None known
+
+   📞 EMERGENCY CONTACTS:
+   ▶ Father — Suresh Kumar: [TAP TO CALL]
+   ▶ Mother — Sunita Kumar: [TAP TO CALL]
+
+   🏥 NEAREST HOSPITAL:
+   Fortis Hospital — 1.2 km (Auto-detected from Vikram's GPS)
+   [Get Directions]
+   ════════════════════════════════════════
+
+STEP 3 — SILENT SERVER ALERT:
+The moment Vikram's browser loaded safeguard.app/emergency/arjun-token,
+the FastAPI server detected the page access.
+
+It immediately:
+   → Captures Vikram's approximate GPS (HTML5 Geolocation, with his consent)
+   → Fires SMS/WhatsApp to ALL of Arjun's contacts:
+     "🚨 Arjun's Emergency QR card was scanned at 2:14 AM near
+      [Location coordinates / Google Maps link].
+      Someone may be helping him. Please call your contacts immediately."
+
+Arjun's father gets this alert even though Arjun's phone is completely dead.
+The father now knows:
+   (1) Someone found Arjun
+   (2) Approximately where Arjun is located
+   (3) That his emergency contacts page was accessed — help is being given
+
+STEP 4 — VIKRAM CALLS THE FATHER:
+Vikram taps "TAP TO CALL" next to Father's name. His phone dials directly.
+Father answers and coordinates next steps.
+
+TECH STACK FOR THIS FEATURE:
+   Python qrcode library      → Generates unique QR image on profile creation
+   Cloudinary                 → Stores QR image + profile photo
+   FastAPI GET /emergency     → Public endpoint, no login required
+   MongoDB                    → users.medical_info + users.emergency_qr_token
+   HTML5 Geolocation API      → Captures scanner's location (with consent)
+   Twilio SMS API             → Fires alert to all contacts on QR scan
+   React                      → "Download My QR Card" button on profile page
+   Python secrets library     → Generates cryptographically secure unique token
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              SUB-FEATURE A
+              SMART ESCALATION LADDER (Tiered SOS)
+              [Sub-feature of: Ghost Timer + All SOS Flows]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT IT IS:
+When ANY SOS fires (Ghost Timer, Cab Deviation, "Safe Until" miss, Duress
+PIN) — the alert does not go to just one person. It goes through a tiered
+chain of contacts with escalating urgency, stopping only when someone
+actively acknowledges.
+
+THE EXACT FLOW:
+SOS Fires
+  ↓
+LEVEL 1 — Immediately:
+   → WhatsApp/SMS to Contact #1 (Friend/Peer)
+   → Message contains a live tracking link + "I'm Responding" link
+   → Wait 2 minutes
+
+  ↓ (no acknowledgement received)
+
+LEVEL 2 — 2 minutes later:
+   → WhatsApp/SMS to Contact #2 (Parent/Guardian)
+   → Message states: "Contact #1 has not responded. Please help."
+   → Wait 2 minutes
+
+  ↓ (no acknowledgement received)
+
+LEVEL 3 — 4 minutes later:
+   → WhatsApp/SMS to Contact #3 (Second Guardian / Trusted Adult)
+   → Wait 2 minutes
+
+  ↓ (no acknowledgement received)
+
+LEVEL 4 — THE LAST RESORT (Emergency Services):
+   → Twilio Voice auto-calls registered campus security number
+   → Twilio WhatsApp messages local police helpline
+   → ONE-TAP "Call 112" button shown on user's screen
+
+ANY LEVEL: If contact taps "I'm Responding" link → ALL escalation stops.
+           Dashboard updates to show which level resolved the situation.
+
+ACKNOWLEDGEMENT SYSTEM:
+Every message contains a unique link: /ack/{journey_id}/{contact_id}
+When clicked → FastAPI marks that contact as "acknowledged"
+→ Background escalation task sees the acknowledgement → stops
+
+WHY LAST RESORT IS CALLS, NOT FIRST:
+Automated calls to emergency numbers are the most disruptive and must be
+reserved for when every human option has failed. Regular contacts always
+receive less intrusive WhatsApp/SMS first.
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              SUB-FEATURE B
+              BATTERY-AWARE SAFETY MODE
+              [Sub-feature of: Ghost Timer]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT IT IS:
+The Ghost Timer is server-side — it survives phone death. But the LAST KNOWN
+GPS position is only as recent as the last WebSocket ping before the phone
+died. This sub-feature ensures contacts are warned BEFORE the phone dies,
+giving the server the best possible last position.
+
+THE FLOW:
+Every WebSocket GPS ping includes battery_level as an extra field.
+
+FastAPI checks battery level on every ping:
+
+   BATTERY = 20% → Warning sent to Contact #1:
+     "⚠️ Arjun's battery is at 20%. Last known location: [Maps link]"
+
+   BATTERY = 10% → Alert sent to ALL contacts:
+     "🔋 Critical: Arjun's phone may die soon. Last GPS: [Maps link]"
+     Ghost Timer countdown is also reduced by 50% (extra caution mode)
+
+   PHONE DIES → No more pings received. Server has the last stored GPS.
+     The last stored position is already in MongoDB from the most recent ping.
+     It is still accessible to all contacts via the live tracking link.
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              SUB-FEATURE C
+              SAFE ZONE REGISTRY
+              [Sub-feature of: Ghost Timer / All SOS Flows]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT IT IS:
+When an SOS or alert fires, most apps just show a red warning. SafeGuard
+shows Arjun exactly WHERE to go — the nearest physically safe location.
+
+HOW IT WORKS:
+Admins register Safe Zones in the admin panel:
+   - Security cabins
+   - 24-hour medical stores
+   - Police booths
+   - Hospital emergency departments
+   - Campus guard posts
+
+When any alert escalates to "active danger" mode, FastAPI runs:
+   MongoDB $near query → Finds all safe zones within 500m of Arjun's GPS
+
+Arjun's screen shows:
+   "📍 Nearest Safe Zones:
+    1. Security Cabin — 80m → Turn RIGHT at the junction [Navigate]
+    2. 24hr Medical Store — 190m → Continue straight [Navigate]
+    3. Main Gate Guard Post — 340m → Behind you [Navigate]"
+
+He taps Navigate → Google Maps Directions API opens a live route to that
+specific safe zone.
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              SUB-FEATURE D
+              TRUSTED CIRCLE LIVE VIEW
+              [Sub-feature of: Safety Contract]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT IT IS:
+The moment Arjun starts any journey (walking or cab), a unique shareable
+URL is generated and sent to ALL his trusted contacts. They can open this
+URL in any browser — no app, no login required — and watch Arjun's live
+location on a map.
+
+WHAT CONTACTS SEE:
+   - A Google Map with Arjun's live moving dot
+   - Current speed: "Walking at 4.9 km/h"
+   - Ghost Timer countdown: "11 minutes remaining" (green → yellow → red)
+   - Live contact response status during SOS (who got the message, who read it,
+     who responded)
+   - Last known position if phone goes offline
+
+WHY THIS MATTERS:
+A text message with coordinates is cold and confusing.
+A live map with a moving dot is HUMAN and emotionally reassuring.
+A parent watching their child's dot move safely toward home and seeing the
+green timer tick down to zero — that is the experience SafeGuard creates.
+
+When the timer hits zero and the dot stops → the parent KNOWS immediately
+and can react. They do not need to wait for a confusing SMS.
+
+
+================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              SUB-FEATURE E
+              DIGITAL SAFETY PASSPORT
+              [Sub-feature of: Offline Emergency QR Card]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================================================================
+
+WHAT IT IS:
+When a First Responder (volunteer) accepts a mission, they need to know WHO
+they are looking for. When a SOS fires on the admin dashboard, security
+needs to know who the student is without making phone calls.
+
+The Digital Safety Passport is a verified identity profile automatically
+shown to the right people at the right time.
+
+WHAT IT CONTAINS:
+   - Full name + profile photo
+   - College name + department + year + roll number
+   - Verified with institutional email (OTP verification at signup)
+   - Blood group + medical conditions (for medical emergencies)
+
+WHEN IT IS SHOWN:
+   - On the Admin Dashboard → beside the student's GPS dot when SOS fires
+   - To the First Responder → after they accept a mission (so they know
+     who to look for)
+   - On the QR Emergency Page → available to the passerby who scanned it
+
+PRIVACY RULE:
+   - Profile photo is NEVER shown on a public or searchable page
+   - It is only revealed on the QR emergency page (when access is intentional)
+     and to verified first responders after mission acceptance
+   - Admin always has access during active SOS situations
+
+
+================================================================================
+                      DATA COLLECTION STRATEGY
+                    (For Future ML Integration)
+================================================================================
+
+SafeGuard is designed to collect structured, labeled data from every user
+interaction so that Machine Learning can be integrated later WITHOUT
+rebuilding the database schema.
+
+DATA COLLECTED PER JOURNEY (stored in MongoDB journeys collection):
+   - Complete GPS path with timestamps (every 5-second ping)
+   - Walking speed at each waypoint
+   - Battery level history throughout journey
+   - Number of direction changes
+   - Stop events (GPS stationary for >30 seconds)
+   - Time deviation: (actual arrival time) vs (estimated arrival time)
+   - Method of journey completion: safe_pin / duress_pin / sos_fired / timeout
+   - Post-journey ratings: lighting (1-5), crowd (1-5), safety feeling (1-5)
+   - Whether safe route recommendation was followed (future feature)
+   - Escalation level reached (0=safe, 1=contact1, 2=contact2, 3=emergency)
+
+DATA COLLECTED PER USER (stored in users collection):
+   - Age, gender, institution name
+   - Typical journey times (baseline behavior — calculated after 5 journeys)
+   - Average walking speed (personal baseline)
+   - Usual departure / arrival hours
+   - Volunteer status and response history
+
+WHY THIS MATTERS:
+Every field collected today is a FUTURE ML FEATURE. Examples:
+   - "Students starting journeys after 11 PM on weekends have 3x higher
+     SOS rates on Route X" → proactive risk warning
+   - "Arjun's normal speed is 5.1 km/h. Tonight he is at 2.8 km/h"
+     → behavioral anomaly detection without ML in v1, with ML in v2
+   - "Area Y consistently gets lighting rating 1-2 after 10 PM"
+     → heatmap becomes predictive, not just historical
+
+
+================================================================================
+                      FEATURE SUMMARY TABLE
+================================================================================
+
+MAIN FEATURES:
+┌────┬──────────────────────────────────────┬─────────────────────────────────┐
+│ #  │ Feature                              │ Core Innovation                 │
+├────┼──────────────────────────────────────┼─────────────────────────────────┤
+│ 1  │ Safety Contract + Duress PIN         │ Covert cancellation = SOS       │
+│ 2  │ Ghost Timer (Server Watchman)        │ Survives phone theft/death      │
+│ 3  │ Cab & Ride-Share Safety Mode         │ Vehicle route deviation alert   │
+│ 4  │ "Safe Until" Scheduler               │ Time-based, stationary safety   │
+│ 5  │ Community First Responder Network    │ Human response layer, nearby    │
+│ 6  │ Offline Emergency QR Card            │ Zero battery, zero internet     │
+└────┴──────────────────────────────────────┴─────────────────────────────────┘
+
+SUB-FEATURES:
+┌────┬──────────────────────────────────────┬─────────────────────────────────┐
+│ A  │ Smart Escalation Ladder              │ Tiered contacts → police calls  │
+│ B  │ Battery-Aware Safety Mode            │ Pre-death GPS preservation      │
+│ C  │ Safe Zone Registry                   │ Actionable escape routes        │
+│ D  │ Trusted Circle Live View             │ Live map for contacts, no app   │
+│ E  │ Digital Safety Passport              │ Identity for responders + admin │
+└────┴──────────────────────────────────────┴─────────────────────────────────┘
+
+
+================================================================================
+                    ONE-LINE PROJECT PITCH
+================================================================================
+
+"SafeGuard is the only personal safety system where the PROTECTION LIVES ON
+THE SERVER — not the phone — making it unstoppable even if the user's phone
+is stolen, switched off, or completely dead."
+
+================================================================================
+                END OF SAFEGUARD FEATURE DOCUMENTATION
+                         Version 1.0 | Final
+================================================================================
